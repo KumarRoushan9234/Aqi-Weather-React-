@@ -1,4 +1,4 @@
-import Home from "./pages/Home";
+import Home from "./trash/Home";
 import Main from "./pages/Main";
 import Weather from "./pages/Weather";
 
@@ -7,7 +7,7 @@ function App() {
   return (
     <div>
       <Main/>
-      <Weather/>
+      {/* <Weather/> */}
     </div>
   );
 }

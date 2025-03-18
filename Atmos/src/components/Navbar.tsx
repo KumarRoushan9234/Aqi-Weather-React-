@@ -6,7 +6,7 @@ import { getUserLocation } from "../utils/getLocation";
 import SearchBar from "./SearchBar";
 import ToggleButton from "./ToggleButton";
 
-const Navbar = () => {
+const Navbar = ({ showAQI, setShowAQI }: { showAQI: boolean; setShowAQI: (val: boolean) => void }) => {
   const [location, setLocation] = useState("New Delhi");
   const dispatch = useDispatch();
 
@@ -21,12 +21,11 @@ const Navbar = () => {
   }, [dispatch]);
 
   return (
-    <nav className="bg-gray-900 p-4 flex justify-between items-center text-white glassmorphism">
+    <nav className="bg-gray-900 p-4 flex justify-between items-center text-white">
       <h1 className="text-2xl font-bold">🌍 Atmos</h1>
-      <SearchBar />
-      
+      <SearchBar/>
       <p className="text-lg font-semibold">{location}</p> {/* Show Location */}
-      <ToggleButton />
+      <ToggleButton showAQI={showAQI} setShowAQI={setShowAQI} />
     </nav>
   );
 };

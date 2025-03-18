@@ -24,9 +24,8 @@ const Main = () => {
 
   return (
     <div>
-      <Navbar />
+      <Navbar showAQI={showAQI} setShowAQI={setShowAQI} />
       <div className="text-center p-4">
-        {/* <ToggleButton onToggle={() => setShowAQI(!showAQI)} /> */}
         {showAQI ? <AirQuality /> : <Weather />}
       </div>
     </div>

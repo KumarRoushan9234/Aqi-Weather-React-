@@ -1,31 +1,24 @@
 import { useState } from "react";
 import { FaSearch } from "react-icons/fa";
 
-interface SearchBarProps {
-  onSearch: (city: string) => void;
-}
-
-const SearchBar = ({ onSearch }: SearchBarProps) => {
-  const [input, setInput] = useState("");
+const SearchBar = () => {
+  const [query, setQuery] = useState("");
 
   const handleSearch = () => {
-    if (input.trim()) {
-      onSearch(input);
-      setInput("");
-    }
+    alert(`Searching for: ${query}`);
   };
 
   return (
-    <div className="flex items-center bg-gray-700 p-3 rounded-lg">
+    <div className="flex bg-white p-2 rounded-lg text-black">
       <input
         type="text"
-        value={input}
-        onChange={(e) => setInput(e.target.value)}
-        placeholder="Search city..."
-        className="bg-transparent outline-none text-white flex-1"
+        placeholder="Search location..."
+        className="p-2 outline-none w-full"
+        value={query}
+        onChange={(e) => setQuery(e.target.value)}
       />
-      <button onClick={handleSearch} className="text-white">
-        <FaSearch />
+      <button onClick={handleSearch} className="p-2">
+        <FaSearch size={20} />
       </button>
     </div>
   );

@@ -1,9 +1,17 @@
 import { useState } from "react";
 
 const ToggleButton = ({ onToggle }: { onToggle: () => void }) => {
+  const [isAQI, setIsAQI] = useState(true);
+
   return (
-    <button onClick={onToggle} className="bg-blue-500 text-white p-2 rounded-lg transition hover:bg-blue-700">
-      Toggle AQI / Weather
+    <button
+      className="bg-gray-700 text-white p-2 rounded-lg"
+      onClick={() => {
+        setIsAQI(!isAQI);
+        onToggle();
+      }}
+    >
+      {isAQI ? "Switch to Weather" : "Switch to AQI"}
     </button>
   );
 };

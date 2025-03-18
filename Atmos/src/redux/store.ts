@@ -1,11 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
-import airQualityReducer from "./airQualitySlice";
 import weatherReducer from "./weatherSlice";
+import airQualityReducer from "./airQualitySlice";
 
 export const store = configureStore({
   reducer: {
-    airQuality: airQualityReducer,
     weather: weatherReducer,
+    airQuality: airQualityReducer,
   },
 });
 

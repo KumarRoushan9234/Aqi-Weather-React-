@@ -1,29 +1,34 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { fetchAQI } from "../api/airQualityAPI";
+import axios from "axios";
 
-interface AQIState {
-  data: any;
-  status: "idle" | "loading" | "succeeded" | "failed";
-}
+const API_KEY = "9bb3b5cd33ee4875f007bd584fa0f40c";
 
-const initialState: AQIState = { data: null, status: "idle" };
-
-export const getAQI = createAsyncThunk("airQuality/getAQI", async ({ lat, lon }: { lat: number; lon: number }) => {
-  return await fetchAQI(lat, lon);
-});
+export const getAQI = createAsyncThunk(
+  "airQuality/fetchAQI",
+  async ({ lat, lon }: { lat: number; lon: number }) => {
+    const response = await axios.get(
+      `https://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=${API_KEY}`
+    );
+    return response.data;
+  }
+);
 
 const airQualitySlice = createSlice({
   name: "airQuality",
-  initialState,
+  initialState: { data: null, status: "idle" },
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(getAQI.pending, (state) => { state.status = "loading"; })
+      .addCase(getAQI.pending, (state) => {
+        state.status = "loading";
+      })
       .addCase(getAQI.fulfilled, (state, action) => {
         state.status = "succeeded";
         state.data = action.payload;
       })
-      .addCase(getAQI.rejected, (state) => { state.status = "failed"; });
+      .addCase(getAQI.rejected, (state) => {
+        state.status = "failed";
+      });
   },
 });
 

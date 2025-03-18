@@ -23,7 +23,7 @@ const Navbar = ({ showAQI, setShowAQI }: { showAQI: boolean; setShowAQI: (val: b
   return (
     <nav className="bg-gray-900 p-4 flex justify-between items-center text-white">
       <h1 className="text-2xl font-bold">🌍 Atmos</h1>
-      <SearchBar/>
+      <SearchBar />
       <p className="text-lg font-semibold">{location}</p> {/* Show Location */}
       <ToggleButton showAQI={showAQI} setShowAQI={setShowAQI} />
     </nav>

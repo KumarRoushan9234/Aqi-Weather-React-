@@ -3,3 +3,10 @@
 @tailwind utilities; */
 
 @import "tailwindcss";
+
+/* .glassmorphism {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0px 4px 12px rgba(255, 255, 255, 0.2);
+} */

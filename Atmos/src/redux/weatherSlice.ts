@@ -1,33 +1,42 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
 
-const API_KEY = "9bb3b5cd33ee4875f007bd584fa0f40c";
+const API_KEY = import.meta.env.VITE_OPENWEATHER_API_KEY;
 
-export const getWeather = createAsyncThunk(
+export const fetchWeather = createAsyncThunk(
   "weather/fetchWeather",
-  async ({ lat, lon }: { lat: number; lon: number }) => {
-    const response = await axios.get(
-      `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`
-    );
-    return response.data;
+  async (city: string, { rejectWithValue }) => {
+    try {
+      const response = await fetch(
+        `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=metric`
+      );
+
+      const data = await response.json();
+      console.log("🌤 Weather API Response:", data); // Debugging
+
+      if (!response.ok) throw new Error(data.message);
+      return data;
+    } catch (error: any) {
+      return rejectWithValue(error.message);
+    }
   }
 );
 
 const weatherSlice = createSlice({
   name: "weather",
-  initialState: { data: null, status: "idle" },
+  initialState: { data: null, status: "idle", error: null },
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(getWeather.pending, (state) => {
+      .addCase(fetchWeather.pending, (state) => {
         state.status = "loading";
       })
-      .addCase(getWeather.fulfilled, (state, action) => {
+      .addCase(fetchWeather.fulfilled, (state, action) => {
         state.status = "succeeded";
         state.data = action.payload;
       })
-      .addCase(getWeather.rejected, (state) => {
+      .addCase(fetchWeather.rejected, (state, action) => {
         state.status = "failed";
+        state.error = action.payload as string;
       });
   },
 });
